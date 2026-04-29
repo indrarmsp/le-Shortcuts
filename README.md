@@ -6,6 +6,10 @@ A personal, power-user dashboard for managing web shortcuts. Built with **Next.j
 
 - **Cloud Syncing**: Optional seamless cross-device syncing powered by **Supabase**. Log in instantly via secure Email Magic Link to backup and sync your dashboard to the cloud. Unauthenticated users gracefully fallback to `localStorage` just like before.
 - **Loading Overlay During Fetch**: A centered loading state appears not only on initial page refresh, but also while user data is reloading (for example right after sign-in and cloud fetch).
+
+### Recent Fixes
+
+- fix: ensure loading overlay persists until authentication/session is resolved so the UI doesn't briefly show "No categories" while data is still being fetched.
 - **Dedicated Mobile View**: Dynamically responsive architecture that serves a truly native-feeling, touch-optimized vertical layout when loaded on mobile bounds.
 - **Square-Grid Layout**: Responsive `auto-fill` grid of shortcut cards with custom icon support — paste high-resolution icons directly from [Flaticon](https://www.flaticon.com/) or upload from file.
 - **Collapsible Categories**: Group shortcuts into categories with emoji or custom image icons; collapse/expand categories to stay focused.

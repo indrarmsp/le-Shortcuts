@@ -18,6 +18,7 @@ export function useDashboardData() {
 
     // Auth State
     const [user, setUser] = useState(null);
+    const [authChecked, setAuthChecked] = useState(false);
 
     const readCategoryPins = useCallback(() => {
         try {
@@ -64,7 +65,8 @@ export function useDashboardData() {
 
         supabase.auth.getSession().then(({ data: { session } }) => {
             setUser(session?.user ?? null);
-        });
+            setAuthChecked(true);
+        }).catch(() => setAuthChecked(true));
 
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             setUser(session?.user ?? null);
@@ -154,6 +156,9 @@ export function useDashboardData() {
             return;
         }
 
+        // Wait until we've checked the current auth session before deciding where to load from.
+        if (!authChecked) return;
+
         const fetchCloudData = async () => {
             try {
                 const { data: supaCats } = await supabase.from('categories').select('*').order('order', { ascending: true });
@@ -232,7 +237,7 @@ export function useDashboardData() {
 
             bootstrapLocal();
         }
-    }, [migrateStoredIconsTo256, persistCategoryPins, persistSessionCache, user, withPinnedCategories]);
+    }, [migrateStoredIconsTo256, persistCategoryPins, persistSessionCache, user, withPinnedCategories, authChecked]);
 
     useEffect(() => {
         if (!isLoaded) return;

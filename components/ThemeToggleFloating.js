@@ -4,8 +4,12 @@ import { Moon, Sun } from 'lucide-react';
 
 export default function ThemeToggleFloating() {
     const [isLight, setIsLight] = useState(() => {
-        if (typeof document === 'undefined') return false;
-        return document.documentElement.classList.contains('light');
+        if (typeof window === 'undefined') return false;
+        try {
+            return localStorage.getItem('theme') === 'light';
+        } catch {
+            return false;
+        }
     });
 
     const toggleTheme = () => {
